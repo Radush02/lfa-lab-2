@@ -1,5 +1,5 @@
 def postfixare(infix):
-  simboluri = {'*': 4, '+': 3, '.': 2, '|': 1}
+  simboluri = {'*': 3, '.': 2, '+': 1}
   pofix, stiva = "", ""
   for c in infix:
     if c == '(':
@@ -57,20 +57,20 @@ for i in regex:
         stiva.append([c1,c2])
         s[c1][i]=c2
     elif i=='*':
-        r1,r2=stiva.pop()
-        cnt=cnt+1
-        c1=cnt
-        cnt=cnt+1
-        c2=cnt
+        r1, r2 = stiva.pop()
+        cnt = cnt + 1
+        c1 = cnt
+        cnt = cnt + 1
+        c2 = cnt
         s.append({})
         s.append({})
-        stiva.append([c1,c2])
-        s[r2]['l']=(r1,c2)
-        s[c1]['l']=(r1,c2)
-        if start==r1:
-            start=c1
-        if end==r2:
-            end=c2
+        stiva.append([c1, c2])
+        s[c1]['l'] = (r1, r2)
+        s[r1]['l'] = (r2, c2)
+        if start == r1:
+            start = c1
+        if end == r2:
+            end = c2
     elif i=='.':
         r11,r12=stiva.pop()
         r21,r22=stiva.pop()
@@ -96,10 +96,13 @@ for i in regex:
         if end==r22 or end==r12:
             end=c2
 
+
 nfa={}
 for nr,x in enumerate(s):
     nfa[nr]=x
 
-print("Stare   Litera   Stare urm.")
+print(nfa)
+#print("Stare   Litera   Stare urm.")
 for x in nfa:
-    print('q'+str(x)+"      ",*nfa[x],"     ",*['q'+str(x) for x in nfa[x].values()])
+    print(x,nfa[x])
+    #print('q'+str(x)+"      ",*nfa[x],"     ",*['q'+str(x) for x in nfa[x].values()])
